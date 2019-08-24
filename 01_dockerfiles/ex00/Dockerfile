@@ -1,3 +1,8 @@
+# 00. From an alpine image you’ll add to your container your favorite text editor, vim or emacs, that will launch along with your container.
+
 FROM alpine
-RUN apt update && apt install -y vim
-ENTRYPOINT vim
+RUN apk update && apk add vim
+CMD ["vim"]
+
+# docker build -t ex00 .
+# docker run -it ex00
