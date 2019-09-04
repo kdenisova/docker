@@ -1,4 +1,4 @@
-# 3. You are going to create your first Dockerfile to containerize Rails applications. That’s a special configuration: this particular Dockerfile will be generic, and called in another Dockerfile, that will look something like this:
+# 02. You are going to create your first Dockerfile to containerize Rails applications. That’s a special configuration: this particular Dockerfile will be generic, and called in another Dockerfile, that will look something like this:
 # FROM        ft-rails:on-build
 # EXPOSE 3000
 # CMD         ["rails", "s", "-b", "0.0.0.0", "-p", "3000"]
@@ -11,9 +11,9 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y sqlite3
 RUN gem install rails
 
-ONBUILD EXPOSE 3000
-ONBUILD COPY /app /opt/app
-ONBUILD WORKDIR /opt/app
+EXPOSE 3000
+COPY /app /opt/app
+WORKDIR /opt/app
 ONBUILD RUN bundle install
 ONBUILD RUN rails db:migrate
 ONBUILD RUN rails db:seed
