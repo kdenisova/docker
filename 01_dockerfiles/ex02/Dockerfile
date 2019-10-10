@@ -9,29 +9,26 @@ FROM ruby:2.6.3 AS ft-rails
 RUN apt-get update
 RUN apt-get install -y nodejs
 RUN apt-get install -y sqlite3
+RUN apt-get install -y curl
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install -y yarn
 RUN gem install rails
 RUN gem install bundler
 RUN gem install rake
-
+WORKDIR /opt/app
+COPY helloworld .
 
 FROM ft-rails
 
 EXPOSE 3000
-COPY /app /opt/app
 WORKDIR /opt/app
 RUN gem install bundler
 RUN bundle install
+RUN yarn install --check-files
 RUN rails db:migrate
 RUN rails db:seed
 CMD ["rails", "s", "-b", "0.0.0.0", "-p", "3000"]
-#RUN apt-get install -y yarn
-
-#RUN gem install bundler
-#RUN gem install yarn
-#RUN rails webpacker:install
-#ONBUILD RUN
-#CMD ["rails", "s", "-b", "0.0.0.0", "-p", "3000"]
-#CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 
 # docker build -t ex02 .
 # docker run --rm -p 3000:3000 ex02
