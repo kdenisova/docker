@@ -7,15 +7,15 @@
 FROM ruby:2.6.3 AS ft-rails
 
 RUN apt-get update
-RUN apt-get install -y nodejs
-RUN apt-get install -y sqlite3
+#RUN apt-get install -y nodejs
+#RUN apt-get install -y sqlite3
 RUN apt-get install -y curl
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install -y yarn
 RUN gem install rails
 RUN gem install bundler
-RUN gem install rake
+#RUN gem install rake
 WORKDIR /opt/app
 COPY helloworld .
 
@@ -23,7 +23,7 @@ FROM ft-rails
 
 EXPOSE 3000
 WORKDIR /opt/app
-RUN gem install bundler
+#RUN gem install bundler
 RUN bundle install
 RUN yarn install --check-files
 RUN rails db:migrate

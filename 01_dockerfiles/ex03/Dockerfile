@@ -2,7 +2,10 @@
 
 FROM debian
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y ca-certificates curl openssh-server postfix
+RUN apt-get install -y ca-certificates 
+RUN apt-get install -y curl 
+RUN apt-get install -y openssh-server 
+RUN apt-get install -y postfix
 RUN curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash
 RUN apt-get -y install gitlab-ce
 EXPOSE 443 80 22
